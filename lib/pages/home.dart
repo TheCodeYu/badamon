@@ -2,6 +2,7 @@ import 'package:badamon/components/button/window_buttons.dart';
 import 'package:badamon/components/tools/title_bar.dart';
 import 'package:badamon/components/tools/tools_bar.dart';
 import 'package:badamon/core/all_based.dart';
+import 'package:badamon/core/windows/application.dart';
 import 'package:badamon/pages/background.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,7 @@ class _HomePageState extends State<HomePage> with AllBased {
               ),
             ),
             Background(),
+            Application(),
             Visibility(
               visible: true,
 

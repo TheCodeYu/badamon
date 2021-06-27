@@ -1,6 +1,10 @@
 import 'dart:async';
 
+import 'package:badamon/config/rx_config.dart';
+import 'package:badamon/core/windows/application.dart';
+import 'package:badamon/core/windows/windows.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class TitleBar extends StatefulWidget {
@@ -43,12 +47,24 @@ class _TitleBarState extends State<TitleBar> {
               tooltip: 'bluetooth',
               padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
               iconSize: 6,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => TestApp(
+                      Aaa(),
+                      context: context,
+                      name: 'App',
+                    ),
+                  ),
+                );
+              },
               icon: Image.asset('assets/os/tools/bluetooth.png')),
           IconButton(
               padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
               iconSize: 6,
-              onPressed: () {},
+              onPressed: () {
+                rx.push(Application.rx_event_app[0], data: {});
+              },
               icon: Image.asset('assets/os/tools/battery.png')),
           IconButton(
               iconSize: 6,
