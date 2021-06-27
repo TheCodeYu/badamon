@@ -51,9 +51,10 @@ class _TitleBarState extends State<TitleBar> {
                 Navigator.of(context).push(
                   MaterialPageRoute<void>(
                     builder: (BuildContext context) => TestApp(
-                      Aaa(),
+                      child: Aaa(),
                       context: context,
                       name: 'App',
+                      windowsFlag: 1,
                     ),
                   ),
                 );

@@ -1,3 +1,5 @@
+import 'package:badamon/components/button/window_buttons.dart';
+import 'package:badamon/components/tools/title_bar.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 
@@ -6,13 +8,22 @@ import 'package:flutter/material.dart';
 ///
 
 class TestApp extends BaseWindows {
-  const TestApp(this.child, {Key? key, this.context, required this.name})
+  const TestApp(
+      {Key? key,
+      required this.child,
+      required this.windowsFlag,
+      this.context,
+      required this.name})
       : super(key: key);
 
   final Widget child;
 
   final String name;
+
+  final int windowsFlag;
+
   final BuildContext? context;
+
   @override
   String appName() => 'Test:' + name;
 
@@ -21,6 +32,9 @@ class TestApp extends BaseWindows {
 
   @override
   BuildContext? getHomeContext() => context;
+
+  @override
+  int getWindowFlag() => windowsFlag;
 }
 
 class Aaa extends StatefulWidget {
@@ -49,6 +63,8 @@ abstract class BaseWindows extends StatefulWidget {
   String appName();
 
   BuildContext? getHomeContext();
+
+  int getWindowFlag(); //App打开模式
   @override
   _BaseWindowsState createState() => _BaseWindowsState();
 }
@@ -63,21 +79,56 @@ class _BaseWindowsState extends State<BaseWindows> {
 
   @override
   Widget build(BuildContext context) {
-    return MoveWindow(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.appName()),
-        ),
-        body: child,
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.miniStartFloat,
-        floatingActionButton: widget.getHomeContext() != null
-            ? IconButton(
-                onPressed: () => Navigator.of(widget.getHomeContext()!).pop(),
-                icon: Icon(Icons.arrow_back_ios),
-              )
-            : null,
-      ),
-    );
+    switch (widget.getWindowFlag()) {
+      case 1:
+        return MoveWindow(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(widget.appName()),
+            ),
+            body: child,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniStartFloat,
+            floatingActionButton: widget.getHomeContext() != null
+                ? IconButton(
+                    onPressed: () =>
+                        Navigator.of(widget.getHomeContext()!).pop(),
+                    icon: Icon(Icons.arrow_back_ios),
+                  )
+                : null,
+          ),
+        );
+
+      default:
+        return Stack(children: [
+          Container(
+            color: Colors.indigo.withOpacity(0.6),
+            child: GestureDetector(
+              onDoubleTap: () {
+                print('双击:${widget.appName()}');
+              },
+              onTap: () {
+                print('单击:${widget.appName()}');
+              },
+              onSecondaryTap: () {
+                print('右击:${widget.appName()}');
+              },
+              child: Stack(
+                children: [
+                  Container(
+                    height: appWindow.titleBarHeight,
+                    color: Colors.red,
+                  ),
+                  TitleBar()
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: appWindow.titleBarHeight),
+            child: child,
+          )
+        ]);
+    }
   }
 }

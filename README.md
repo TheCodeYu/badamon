@@ -7,6 +7,7 @@ auto bdw = bitsdojo_window_configure(BDW_CUSTOM_FRAME | BDW_HIDE_ON_STARTUP);
 
 ## 已知问题带修复
 1.配置文件读取时值超过范围
+2.内部App移动时会带着应用整体移动  # 解决
 
 
 //监听每一帧结束

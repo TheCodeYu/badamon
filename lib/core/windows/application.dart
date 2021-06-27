@@ -33,12 +33,17 @@ class _ApplicationState extends State<Application> {
           ),
           onDraggableCanceled: (Velocity velocity, Offset offset) {
             setState(() {
-              this.offset[index] = offset;
+              /// [todo] 这个31咋算
+              this.offset[index] = Offset(offset.dx, offset.dy - 31);
             });
           },
           child: Container(
             color: Colors.transparent,
-            child: TestApp(Aaa(), name: 'TestApp:$index'),
+            child: TestApp(
+              child: Aaa(),
+              name: 'TestApp:$index',
+              windowsFlag: 0,
+            ),
           ),
         ));
   }
